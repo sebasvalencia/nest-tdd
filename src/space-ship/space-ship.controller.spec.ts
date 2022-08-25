@@ -1,5 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SpaceShipController } from './space-ship.controller';
+import {
+  SaveSpaceShipRequest,
+  SpaceShipController,
+} from './space-ship.controller';
 import { SpaceShipService } from './space-ship.service';
 jest.mock('./space-ship.service');
 
@@ -11,7 +14,7 @@ describe('SpaceShipController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SpaceShipController],
       providers: [SpaceShipService],
-      imports:[]
+      imports: [],
     }).compile();
 
     controller = module.get<SpaceShipController>(SpaceShipController);
@@ -23,8 +26,13 @@ describe('SpaceShipController', () => {
   });
 
   it('should call the service', () => {
-    const spaceShip = {};
-    
+    const spaceShip: SaveSpaceShipRequest = {
+      spaceShipId: 'abc-123-ship',
+      spaceShipName: 'Star Harvester',
+      spaceShipNumber: 42,
+      isFasterThanLight: true,
+    };
+
     controller.save(spaceShip);
     expect(service.saveSpaceShip).toHaveBeenCalled();
   });
